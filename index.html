@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FLOWZEN</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════=
+       HEADER
+  ═══════════════════════════════ -->
+  <header>
+    <div class="header-left">
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo" onclick="showPage('home')">
+        <span class="logo-emoji">🏙️</span>
+        <div>
+          <div class="logo-title">FLOWZEN</div>
+          <div class="logo-sub">Smart monitoring for public spaces</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Live — <span id="liveClock">--:--:--</span>
+      </div>
+      <button class="auth-btn" onclick="showPage('login')"> Login / Sign Up</button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════
+       MOBILE SIDEBAR OVERLAY
+  ═══════════════════════════════ -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span>📋 Menu</span>
+      <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+    </div>
+    <ul>
+      <li><a href="#" onclick="showPage('home');closeSidebar()"> Home</a></li>
+      <li><a href="#" onclick="showPage('dashboard');closeSidebar()">Dashboard</a></li>
+      <li><a href="#" onclick="showPage('monitor');closeSidebar()">Monitoring</a></li>
+      <li><a href="#" onclick="showPage('queue');closeSidebar()">Queue AI</a></li>
+      <li><a href="#" onclick="showPage('alerts');closeSidebar()"> Alerts</a></li>
+      <li><a href="#" onclick="showPage('contact');closeSidebar()">Contact</a></li>
+      <li class="sidebar-divider"></li>
+      <li><a href="#" onclick="showPage('login');closeSidebar()">login / Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════
+       DESKTOP TOP NAV
+  ═══════════════════════════════ -->
+  <nav class="topnav">
+    <ul>
+      <li><a href="#" class="nav-link active" data-page="home"     onclick="showPage('home')">Home</a></li>
+      <li><a href="#" class="nav-link"         data-page="dashboard" onclick="showPage('dashboard')"> Dashboard</a></li>
+      <li><a href="#" class="nav-link"         data-page="monitor"   onclick="showPage('monitor')">Monitoring</a></li>
+      <li><a href="#" class="nav-link"         data-page="queue"     onclick="showPage('queue')">Queue AI</a></li>
+      <li><a href="#" class="nav-link"         data-page="alerts"    onclick="showPage('alerts')"> Alerts</a></li>
+      <li><a href="#" class="nav-link"         data-page="contact"   onclick="showPage('contact')">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════
+       PAGES WRAPPER
+  ═══════════════════════════════ -->
+  <main id="mainContent">
+
+    <!-- ── PAGE: HOME ── -->
+    <div class="page active" id="page-home">
+      <div class="hero-box">
+        <div class="hero-icon"></div>
+        <h1 class="hero-title">WELCOME TO FLOWZEN</h1>
+        <p class="hero-desc">AI-powered crowd density monitoring + smart queue optimization — keeping public spaces safe, efficient, and hassle-free.</p>
+        <div class="hero-chips">
+          <span class="chip blue"> Live Monitoring</span>
+          <span class="chip"> AI Model v4.2</span>
+          <span class="chip"> 6 Zones Active</span>
+          <span class="chip">Smart Queues</span>
+          <span class="chip"> 99.8% Uptime</span>
+        </div>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('dashboard')">View Dashboard</button>
+          <button class="btn-outline" onclick="showPage('queue')">Join a Queue</button>
+        </div>
+      </div>
+
+      <!-- Feature cards -->
+      <div class="features-grid">
+        <div class="feature-card" onclick="showPage('dashboard')">
+          <div class="feature-icon"></div>
+          <div class="feature-title">Live Dashboard</div>
+          <div class="feature-desc">Real-time people count, zone density, and 12-hour chart analytics.</div>
+          <div class="feature-link">Open Dashboard →</div>
+        </div>
+        <div class="feature-card" onclick="showPage('monitor')">
+          <div class="feature-icon"></div>
+          <div class="feature-title">Camera Monitoring</div>
+          <div class="feature-desc">4 live camera feeds with crowd simulation and status indicators.</div>
+          <div class="feature-link">View Cameras →</div>
+        </div>
+        <div class="feature-card highlight" onclick="showPage('queue')">
+          <div class="feature-icon"></div>
+          <div class="feature-title">AI Queue System</div>
+          <div class="feature-desc">Smart queue optimization, digital tokens, and QR-based entry tracking.</div>
+          <div class="feature-link">Manage Queues →</div>
+        </div>
+        <div class="feature-card" onclick="showPage('alerts')">
+          <div class="feature-icon"></div>
+          <div class="feature-title">Alert Center</div>
+          <div class="feature-desc">Instant overcrowding alerts with severity levels and timestamps.</div>
+          <div class="feature-link">View Alerts →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: DASHBOARD ── -->
+    <div class="page" id="page-dashboard">
+      <div class="page-header">
+        <div class="section-tag"> Dashboard</div>
+        <h2>REAL-TIME OVERVIEW</h2>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card blue">
+          <div class="card-icon"></div>
+          <div class="card-label">People Detected</div>
+          <div class="card-value" id="count">0</div>
+          <div class="card-sub">Across all zones</div>
+        </div>
+        <div class="card amber">
+          <div class="card-icon"></div>
+          <div class="card-label">Crowd Density</div>
+          <div class="card-value" style="font-size:1.4rem;color:#e1aa6b;">Medium</div>
+          <div class="dbar"><div class="dbar-fill" style="--w:58%;width:58%"></div></div>
+        </div>
+        <div class="card green">
+          <div class="card-icon"></div>
+          <div class="card-label">Active Zones</div>
+          <div class="card-value">6</div>
+          <div class="card-sub">2 need attention</div>
+        </div>
+        <div class="card red">
+          <div class="card-icon"></div>
+          <div class="card-label">Alerts Today</div>
+          <div class="card-value" style="color:#ef4444;">3</div>
+          <div class="card-sub">1 critical</div>
+        </div>
+      </div>
+
+      <div class="section-tag" style="margin-bottom:0.8rem;"> Zone Density</div>
+      <div class="zone-row">
+        <div class="zone-card">
+          <div class="zone-header"><span class="zone-name"> Zone A — Entrance</span><span class="zone-pill critical">Critical</span></div>
+          <div class="zone-pct critical">94%</div>
+          <div class="zone-bar"><div class="zone-bar-fill critical" style="width:94%"></div></div>
+          <div class="zone-hint">Very crowded — action needed</div>
+        </div>
+        <div class="zone-card">
+          <div class="zone-header"><span class="zone-name"> Zone B — Main Hall</span><span class="zone-pill moderate">Moderate</span></div>
+          <div class="zone-pct moderate">58%</div>
+          <div class="zone-bar"><div class="zone-bar-fill moderate" style="width:58%"></div></div>
+          <div class="zone-hint">Getting busy — keep watch</div>
+        </div>
+        <div class="zone-card">
+          <div class="zone-header"><span class="zone-name"> Zone C — North Exit</span><span class="zone-pill low">Low</span></div>
+          <div class="zone-pct low">18%</div>
+          <div class="zone-bar"><div class="zone-bar-fill low" style="width:18%"></div></div>
+          <div class="zone-hint">All clear — plenty of space</div>
+        </div>
+        <div class="zone-card">
+          <div class="zone-header"><span class="zone-name"> Zone D — Parking</span><span class="zone-pill low">Low</span></div>
+          <div class="zone-pct low">12%</div>
+          <div class="zone-bar"><div class="zone-bar-fill low" style="width:12%"></div></div>
+          <div class="zone-hint">All clear — plenty of space</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title"> People Count — Last 12 Hours</div>
+        <canvas id="sparkChart" height="110"></canvas>
+      </div>
+    </div>
+
+    <!-- ── PAGE: MONITORING ── -->
+    <div class="page" id="page-monitor">
+      <div class="page-header">
+        <div class="section-tag"> Live Feeds</div>
+        <h2>CAMERA MONITORING</h2>
+      </div>
+      <div class="monitor-grid">
+        <div class="cam-card">
+          <div class="cam-screen"><div class="crowd-sim" id="simA"></div></div>
+          <div class="rec-bar"><div class="rec-dot"></div> RECORDING</div>
+          <div class="cam-info">
+            <div><div class="cam-name">Camera 1 — Entrance Plaza</div><div class="cam-zone">Zone A</div></div>
+            <div class="cam-status critical">⚠ Critical</div>
+          </div>
+        </div>
+        <div class="cam-card">
+          <div class="cam-screen"><div class="crowd-sim" id="simB"></div></div>
+          <div class="rec-bar"><div class="rec-dot"></div> RECORDING</div>
+          <div class="cam-info">
+            <div><div class="cam-name">Camera 2 — Main Hall</div><div class="cam-zone">Zone B</div></div>
+            <div class="cam-status moderate"> Moderate</div>
+          </div>
+        </div>
+        <div class="cam-card">
+          <div class="cam-screen"><div class="crowd-sim" id="simC"></div></div>
+          <div class="rec-bar"><div class="rec-dot"></div> RECORDING</div>
+          <div class="cam-info">
+            <div><div class="cam-name">Camera 3 — North Exit</div><div class="cam-zone">Zone C</div></div>
+            <div class="cam-status low"> Low</div>
+          </div>
+        </div>
+        <div class="cam-card">
+          <div class="cam-screen"><div class="crowd-sim" id="simD"></div></div>
+          <div class="rec-bar"><div class="rec-dot"></div> RECORDING</div>
+          <div class="cam-info">
+            <div><div class="cam-name">Camera 4 — Parking Area</div><div class="cam-zone">Zone D</div></div>
+            <div class="cam-status low"> Low</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: QUEUE AI ── -->
+    <div class="page" id="page-queue">
+      <div class="page-header">
+        <div class="section-tag"> AI Queue Optimization</div>
+        <h2>SMART QUEUE MANAGEMENT</h2>
+      </div>
+
+      <!-- Stats -->
+      <div class="q-stats">
+        <div class="q-stat-card purple"><div class="q-stat-icon"></div><div class="q-stat-val" id="totalTokens">47</div><div class="q-stat-label">Tokens Issued</div></div>
+        <div class="q-stat-card teal"><div class="q-stat-icon"></div><div class="q-stat-val" id="servedCount">31</div><div class="q-stat-label">People Served</div></div>
+        <div class="q-stat-card orange"><div class="q-stat-icon"></div><div class="q-stat-val">8 min</div><div class="q-stat-label">Avg. Wait Time</div></div>
+        <div class="q-stat-card pink"><div class="q-stat-icon"></div><div class="q-stat-val">92%</div><div class="q-stat-label">AI Efficiency</div></div>
+      </div>
+
+      <!-- AI Banner -->
+      <div class="ai-suggestion" id="aiSuggestion">
+        <div class="ai-icon"></div>
+        <div>
+          <div class="ai-text-bold">AI Recommendation: Move to Queue B</div>
+          <div class="ai-text-sub">Queue A has 18 people (≈14 min). Queue B has only 5 people (≈4 min). Save 10 minutes!</div>
+        </div>
+        <button class="ai-action-btn" onclick="acceptAISuggestion()">Accept &amp; Switch</button>
+      </div>
+
+      <!-- Queue Lanes -->
+      <div class="queue-grid">
+        <div class="queue-lane" id="lane-A">
+          <div class="ql-header">
+            <div><div class="ql-name">🔴 Queue A — General</div><div class="ql-service">Counter 1 &amp; 2 · General Services</div></div>
+            <div class="ql-status-dot red"></div>
+          </div>
+          <div class="ql-people" id="people-A"></div>
+          <div class="ql-wait-row"><span class="ql-wait-label">⏳ Wait Time</span><span class="ql-wait-time slow" id="wait-A">~14 min</span></div>
+          <div class="ql-bar"><div class="ql-bar-fill slow" id="bar-A" style="width:87%"></div></div>
+          <div class="ql-count-row"><span class="ql-count">👥 <strong id="cnt-A">18</strong> waiting · 2 serving</span><button class="ql-join-btn" onclick="joinQueue('A')">Join</button></div>
+        </div>
+        <div class="queue-lane recommended" id="lane-B">
+          <div class="ql-header">
+            <div><div class="ql-name">🟢 Queue B — Express</div><div class="ql-service">Counter 3 · Express (under 5 items)</div></div>
+            <div class="ql-status-dot green"></div>
+          </div>
+          <div class="ql-people" id="people-B"></div>
+          <div class="ql-wait-row"><span class="ql-wait-label">⏳ Wait Time</span><span class="ql-wait-time fast" id="wait-B">~4 min</span></div>
+          <div class="ql-bar"><div class="ql-bar-fill fast" id="bar-B" style="width:28%"></div></div>
+          <div class="ql-count-row"><span class="ql-count">👥 <strong id="cnt-B">5</strong> waiting · 1 serving</span><button class="ql-join-btn" onclick="joinQueue('B')">Join</button></div>
+        </div>
+        <div class="queue-lane" id="lane-C">
+          <div class="ql-header">
+            <div><div class="ql-name">🟡 Queue C — Senior</div><div class="ql-service">Counter 4 · Senior &amp; Disabled Priority</div></div>
+            <div class="ql-status-dot amber"></div>
+          </div>
+          <div class="ql-people" id="people-C"></div>
+          <div class="ql-wait-row"><span class="ql-wait-label">⏳ Wait Time</span><span class="ql-wait-time medium" id="wait-C">~8 min</span></div>
+          <div class="ql-bar"><div class="ql-bar-fill medium" id="bar-C" style="width:52%"></div></div>
+          <div class="ql-count-row"><span class="ql-count">👥 <strong id="cnt-C">9</strong> waiting · 1 serving</span><button class="ql-join-btn" onclick="joinQueue('C')">Join</button></div>
+        </div>
+        <div class="queue-lane" id="lane-D">
+          <div class="ql-header">
+            <div><div class="ql-name">🔵 Queue D — Online Pickup</div><div class="ql-service">Counter 5 · Pre-booked Orders</div></div>
+            <div class="ql-status-dot green"></div>
+          </div>
+          <div class="ql-people" id="people-D"></div>
+          <div class="ql-wait-row"><span class="ql-wait-label">⏳ Wait Time</span><span class="ql-wait-time fast" id="wait-D">~2 min</span></div>
+          <div class="ql-bar"><div class="ql-bar-fill fast" id="bar-D" style="width:15%"></div></div>
+          <div class="ql-count-row"><span class="ql-count">👥 <strong id="cnt-D">3</strong> waiting · 1 serving</span><button class="ql-join-btn" onclick="joinQueue('D')">Join</button></div>
+        </div>
+      </div>
+
+      <!-- Live Board -->
+      <div class="live-board">
+        <div class="board-header">
+          <div class="board-title">📋 Live Token Board</div>
+          <button class="board-refresh" onclick="refreshBoard()">🔄 Refresh</button>
+        </div>
+        <div class="table-scroll">
+          <table class="board-table">
+            <thead><tr><th>Token</th><th>Name</th><th>Queue</th><th>Wait</th><th>Status</th></tr></thead>
+            <tbody id="boardBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Token Generator -->
+      <div class="token-section">
+        <h3>🎫 Get Your Digital Token</h3>
+        <p>Enter your details, choose a queue, and get a digital token with QR code instantly.</p>
+        <div class="token-form">
+          <div class="token-field"><label>Your Name</label><input type="text" id="tokenName" placeholder="e.g. Rahul Sharma"/></div>
+          <div class="token-field"><label>Mobile Number</label><input type="tel" id="tokenPhone" placeholder="e.g. 9876543210"/></div>
+          <div class="token-field">
+            <label>Select Queue</label>
+            <select id="tokenQueue">
+              <option value="">-- Choose Queue --</option>
+              <option value="A">Queue A — General (~14 min)</option>
+              <option value="B">Queue B — Express (~4 min) ⭐</option>
+              <option value="C">Queue C — Senior Priority (~8 min)</option>
+              <option value="D">Queue D — Online Pickup (~2 min)</option>
+            </select>
+          </div>
+          <button class="btn-get-token" onclick="generateToken()">🎫 Get Token + QR</button>
+        </div>
+
+        <!-- Token Card -->
+        <div class="token-card-wrap" id="tokenCardWrap">
+          <div class="token-card">
+            <div class="token-left">
+              <div class="token-small-label">Your Token Number</div>
+              <div class="token-num" id="displayTokenNum">--</div>
+              <div class="token-name" id="displayTokenName">--</div>
+              <div class="token-queue-name" id="displayTokenQueue">--</div>
+            </div>
+            <div class="token-details">
+              <div class="token-detail-row"><span>⏱️</span><div><div class="token-detail-val" id="displayWait">--</div><div class="token-detail-label">Estimated Wait</div></div></div>
+              <div class="token-detail-row"><span>📍</span><div><div class="token-detail-val" id="displayPosition">--</div><div class="token-detail-label">Your Position</div></div></div>
+              <div class="token-detail-row"><span>🕐</span><div><div class="token-detail-val" id="displayIssuedAt">--</div><div class="token-detail-label">Issued At</div></div></div>
+              <div class="token-detail-row"><span>📞</span><div><div class="token-detail-val" id="displayPhone">--</div><div class="token-detail-label">Alert Number</div></div></div>
+            </div>
+            <div class="token-qr-wrap">
+              <div class="token-qr-box" id="qrCode"></div>
+              <div class="token-qr-label">Scan to track<br>your queue live</div>
+            </div>
+          </div>
+
+          <div class="token-tracker">
+            <div class="tracker-title">📡 Real-Time Queue Tracker</div>
+            <div class="tracker-steps">
+              <div class="tracker-step done" id="step1"><div class="step-circle">✓</div><div class="step-label">Token<br>Issued</div></div>
+              <div class="tracker-step done" id="step2"><div class="step-circle">✓</div><div class="step-label">In<br>Queue</div></div>
+              <div class="tracker-step active" id="step3"><div class="step-circle">3</div><div class="step-label">Almost<br>Your Turn</div></div>
+              <div class="tracker-step" id="step4"><div class="step-circle">4</div><div class="step-label">Being<br>Called</div></div>
+              <div class="tracker-step" id="step5"><div class="step-circle">5</div><div class="step-label">Service<br>Complete</div></div>
+            </div>
+          </div>
+
+          <div class="call-ticker">
+            <div class="ticker-icon">🔔</div>
+            <div>
+              <div class="ticker-now" id="tickerNow">Now Serving: Token #A-032</div>
+              <div class="ticker-sub" id="tickerSub">Counter 3 · Queue B Express — Please proceed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: ALERTS ── -->
+    <div class="page" id="page-alerts">
+      <div class="page-header">
+        <div class="section-tag"> Alerts</div>
+        <h2>Active Notifications</h2>
+      </div>
+      <div class="alert-list">
+        <div class="alert red">
+          <div class="alert-emoji"></div>
+          <div><div class="alert-title">Overcrowding Detected — Zone A</div><div class="alert-meta">Today at 2:32 PM · Density: 94% · Threshold exceeded</div></div>
+          <div class="alert-badge">Critical</div>
+        </div>
+        <div class="alert yellow">
+          <div class="alert-emoji"></div>
+          <div><div class="alert-title">Crowd Building Up — Zone B</div><div class="alert-meta">Today at 2:28 PM · Density: 58% · Keep monitoring</div></div>
+          <div class="alert-badge">Warning</div>
+        </div>
+        <div class="alert green">
+          <div class="alert-emoji"></div>
+          <div><div class="alert-title">Zone D Is Back to Normal</div><div class="alert-meta">Today at 2:15 PM · Density: 12% · No action needed</div></div>
+          <div class="alert-badge">Resolved</div>
+        </div>
+        <div class="alert yellow">
+          <div class="alert-emoji"></div>
+          <div><div class="alert-title">Queue A Threshold Exceeded</div><div class="alert-meta">Today at 2:10 PM · 18 people waiting · Suggest redirect to Queue B</div></div>
+          <div class="alert-badge">Warning</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: CONTACT ── -->
+    <div class="page" id="page-contact">
+      <div class="page-header">
+        <div class="section-tag">Contact</div>
+        <h2>Get in Touch</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon-wrap"></div>
+          <div><div class="contact-label">Operations Email</div><div class="contact-value">admin@gmail.com</div></div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon-wrap"></div>
+          <div><div class="contact-label">Support Helpline</div><div class="contact-value">+91-800-CROWD-AI</div></div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon-wrap"></div>
+          <div><div class="contact-label">Office Address</div><div class="contact-value">Lucknow, UP</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: LOGIN / SIGN UP ── -->
+    <div class="page" id="page-login">
+      <div class="auth-page">
+
+        <!-- Tab Toggle -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')"> Login</button>
+          <button class="auth-tab" id="tabSignup" onclick="switchTab('signup')"> Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div class="auth-form" id="formLogin">
+          <div class="auth-header">
+            <div class="auth-icon"></div>
+            <h2>Welcome Back!</h2>
+            <p>Sign in to your operator account</p>
+          </div>
+          <div class="field">
+            <label>Username or Email</label>
+            <input type="text" placeholder="e.g. operator_01 or you@email.com"/>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password"/>
+          </div>
+          <div class="auth-options">
+            <label class="checkbox-wrap"><input type="checkbox"/> Remember me</label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+          <button class="btn-auth" onclick="handleLogin()"> Sign In</button>
+          <div class="auth-switch">Don't have an account? <a href="#" onclick="switchTab('signup')">Sign Up free →</a></div>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div class="auth-form hidden" id="formSignup">
+          <div class="auth-header">
+            <div class="auth-icon"></div>
+            <h2>Create Account</h2>
+            <p>Join the ACMS operator network</p>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>First Name</label><input type="text" placeholder="Rahul"/></div>
+            <div class="field"><label>Last Name</label><input type="text" placeholder="Sharma"/></div>
+          </div>
+          <div class="field"><label>Email Address</label><input type="email" placeholder="you@email.com"/></div>
+          <div class="field"><label>Mobile Number</label><input type="tel" placeholder="9876543210"/></div>
+          <div class="field"><label>Password</label><input type="password" placeholder="Min. 8 characters"/></div>
+          <div class="field"><label>Confirm Password</label><input type="password" placeholder="Repeat password"/></div>
+          <div class="field">
+            <label>Role</label>
+            <select style="width:100%;border:2px solid #9372cb;border-radius:10px;padding:0.7rem 1rem;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;">
+              <option>Operator</option>
+              <option>Supervisor</option>
+              <option>Admin</option>
+              <option>Viewer</option>
+            </select>
+          </div>
+          <div class="auth-terms"><label class="checkbox-wrap"><input type="checkbox"/> I agree to the <a href="#">Terms &amp; Conditions</a></label></div>
+          <button class="btn-auth signup" onclick="handleSignup()">Create Account</button>
+          <div class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Login →</a></div>
+        </div>
+
+        <!-- Success Message (hidden by default) -->
+        <div class="auth-success hidden" id="authSuccess">
+          <div class="success-icon"></div>
+          <h2>You're In!</h2>
+          <p id="successMsg">Welcome back! Redirecting to Dashboard...</p>
+          <button class="btn-auth" onclick="showPage('dashboard')">Go to Dashboard →</button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════
+       FOOTER
+  ═══════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">© 2026 <strong>An AI-based crowd management system designed to monitor, analyze, and control crowd density in real-time.</strong> — All rights reserved</div>
+      <div class="footer-right">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html> 
